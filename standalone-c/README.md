@@ -22,6 +22,6 @@ Received result 499500
 
 To rebuild the application use a command similar to the following:
 ```shell
-clang -Wall -Wformat -o external-lib main.c awesome.c -I.
+clang -Wall -o external-lib main.c awesome.c -I.
 ```
 This command may vary based on your target platform.
