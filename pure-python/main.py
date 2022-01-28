@@ -2,7 +2,7 @@ import argparse
 import random
 
 MAXIMUM_RANDOM_VALUE = 999999
-DEFAULT_ITERATIONS = 5000000
+DEFAULT_ITERATIONS = 1000
 
 
 def parse_args():

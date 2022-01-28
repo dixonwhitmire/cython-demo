@@ -18,7 +18,7 @@ RESULT_FILE_PATH=${1:-"./python-c-integrations.csv"}
 ITERATIONS=(10 100 1000 10000 100000 1000000)
 
 # applications to run
-APPS=(standalone-c pure-python)
+APPS=(standalone-c pure-python ctypes)
 
 # C shared object file used for ctypes testing
 SHARED_OBJECT_PATH="library-c/awesome-lib.so"
