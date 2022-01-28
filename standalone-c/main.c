@@ -9,18 +9,14 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
-    size_t numIterations = 0;
+    int numCalculations = 0;
 
-    if (sscanf(argv[1], "%zu", &numIterations) != 1) {
+    if (sscanf(argv[1], "%d", &numCalculations) != 1) {
         fprintf(stderr, "error %s is not an integer value", argv[1]);
         return EXIT_FAILURE;
     }
 
-    fprintf(stdout, "Running %zu iterations...\n", numIterations);
-
-    size_t result = multiplyAssign(numIterations);
-    fprintf(stdout, "Received result %zu", result);
-    puts("");
+    demo(numCalculations);
 
     return EXIT_SUCCESS;
 }

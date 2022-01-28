@@ -1,4 +1,4 @@
-#include <stdio.h>
+                #include <stdio.h>
 #include <stdlib.h>
 
 const int MAXIMUM_RANDOM_VALUE = 999999;
@@ -9,7 +9,7 @@ int generateRandomNumber() {
 
 /**
  * @brief Demo function that performs arbitrary calculations
- * 
+ *
  * @param numCalculations The number of iterations/calculations to execute
  * @return int a random integer
  */

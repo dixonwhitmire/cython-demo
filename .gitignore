@@ -133,5 +133,8 @@ dmypy.json
 .vscode
 
 # C
+app
 a.out
+awesome-lib.so
+*.o
 
