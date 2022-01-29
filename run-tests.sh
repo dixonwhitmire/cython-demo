@@ -18,10 +18,11 @@ RESULT_FILE_PATH=${1:-"./python-c-integrations.csv"}
 ITERATIONS=(10 100 1000 10000 100000 1000000)
 
 # applications to run
-APPS=(standalone-c pure-python ctypes)
+APPS=(standalone-c extension ctypes pure-python)
 
 # C shared object file used for ctypes testing
 SHARED_OBJECT_PATH="library-c/awesome-lib.so"
+EXTENSION_INTERPRETER="extension/venv/bin/python3"
 
 # validates that the script is ready to run
 function check_list ()
@@ -29,9 +30,17 @@ function check_list ()
   if [ ! -f "$SHARED_OBJECT_PATH" ]; then
     echo "$SHARED_OBJECT_PATH was not found."
     echo "Did you build library-c?"
-    echo "Please review library-c/README.md for additional build instructions."
+    echo "Please run build-apps.sh or review library-c/README.md for additional build instructions."
     exit 1;
   fi
+
+  if [ ! -f "$EXTENSION_INTERPRETER" ]; then
+    echo "$EXTENSION_INTERPRETER was not found."
+    echo "Did you build the extension module?"
+    echo "Please run build-apps.sh."
+    exit 1;
+  fi
+
 }
 
 # creates the output CSV file and associated header record
@@ -49,6 +58,8 @@ function execute_app ()
 {
   if [ "$1" == "standalone-c" ]; then
     time ./"$a"/app "$2"
+  elif [ "$1" == "extension" ]; then
+    time "$EXTENSION_INTERPRETER" "$a"/main.py "$2"
   else
     time python3 "$a"/main.py "$2"
   fi

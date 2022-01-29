@@ -10,13 +10,21 @@ echo "building standalone-c ..."
 rm -f app
 clang -Wall -o app awesome.c main.c -I.
 echo "build complete"
+cd ../
 
 # build library-c
-cd ../library-c
+cd library-c
 echo "building library-c aka awesome-lib.so ..."
 rm -f awesome.o awesome-lib.so
 clang -Wall -c -fPIC -o awesome.o awesome.c -I.
 clang -shared -fPIC -Wl,-install_name,awesome-lib.so.1 -o awesome-lib.so awesome.o -lc
 echo "build complete"
+cd ../
 
+# build extension module
+cd extension
+rm -rf venv && python3 -m venv venv && source venv/bin/activate && pip install --upgrade pip setuptools
+echo "building extension module"
+echo "build complete"
+source venv/bin/activate && python3 setup.py build_ext --inplace
 cd ../

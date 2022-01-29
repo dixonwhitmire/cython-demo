@@ -1,4 +1,4 @@
-                #include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 const int MAXIMUM_RANDOM_VALUE = 999999;
