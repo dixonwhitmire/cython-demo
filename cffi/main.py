@@ -1,5 +1,6 @@
 import argparse
 from _awesome_demo.lib import demo
+
 DEFAULT_ITERATIONS = 1000
 
 
