@@ -18,7 +18,7 @@ RESULT_FILE_PATH=${1:-"./python-c-integrations.csv"}
 ITERATIONS=(10 100 1000 10000 100000 1000000)
 
 # applications to run
-APPS=(standalone-c extension cffi ctypes pure-python)
+APPS=(standalone-c extension cython cffi ctypes pure-python)
 
 # C shared object file used for ctypes testing
 SHARED_OBJECT_PATH="library-c/awesome-lib.so"
@@ -26,7 +26,8 @@ SHARED_OBJECT_PATH="library-c/awesome-lib.so"
 PYTHON3_PATH="venv/bin/python3"
 EXTENSION_INTERPRETER="extension/$PYTHON3_PATH"
 CFFI_INTERPRETER="cffi/$PYTHON3_PATH"
-INTERPRETERS=($EXTENSION_INTERPRETER $CFFI_INTERPRETER)
+CYTHON_INTERPRETER="cython/$PYTHON3_PATH"
+INTERPRETERS=($EXTENSION_INTERPRETER $CFFI_INTERPRETER $CYTHON_INTERPRETER)
 
 # validates that the script is ready to run
 function check_list ()
@@ -51,7 +52,7 @@ function check_list ()
 function initialize_file ()
 {
   cat /dev/null > "$RESULT_FILE_PATH"
-  echo "app_name, iterations, elapsed_time" >> "$RESULT_FILE_PATH"
+  echo "iterations, app_name, elapsed_time" >> "$RESULT_FILE_PATH"
 }
 
 # executes a demo application
@@ -82,7 +83,7 @@ for i in "${ITERATIONS[@]}"; do
   for a in "${APPS[@]}"; do
     # redirect "time" output from stderr and capture
     elapsed_time=$(execute_app "$a" "$i" 2>&1)
-    echo "$a, $i, $elapsed_time" >> "$RESULT_FILE_PATH"
+    echo "$i, $a, $elapsed_time" >> "$RESULT_FILE_PATH"
   done
 done
 

@@ -138,6 +138,8 @@ a.out
 awesome-lib.so
 *.o
 cffi/*.c
+cffi/Users
+cython/*.c
 
 # Reporting
 *.csv
