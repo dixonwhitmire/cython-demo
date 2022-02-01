@@ -28,3 +28,10 @@ echo "building extension module"
 echo "build complete"
 source venv/bin/activate && python3 setup.py build_ext --inplace
 cd ../
+
+# build cffi module
+cd cffi
+echo "building cffi module"
+rm -rf venv && python3 -m venv venv && source venv/bin/activate && pip install --upgrade pip setuptools cffi
+echo "build complete"
+cd ../

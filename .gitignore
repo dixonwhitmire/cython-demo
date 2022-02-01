@@ -137,6 +137,7 @@ app
 a.out
 awesome-lib.so
 *.o
+cffi/*.c
 
 # Reporting
 *.csv

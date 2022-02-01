@@ -18,11 +18,15 @@ RESULT_FILE_PATH=${1:-"./python-c-integrations.csv"}
 ITERATIONS=(10 100 1000 10000 100000 1000000)
 
 # applications to run
-APPS=(standalone-c extension ctypes pure-python)
+APPS=(standalone-c extension cffi ctypes pure-python)
 
 # C shared object file used for ctypes testing
 SHARED_OBJECT_PATH="library-c/awesome-lib.so"
-EXTENSION_INTERPRETER="extension/venv/bin/python3"
+
+PYTHON3_PATH="venv/bin/python3"
+EXTENSION_INTERPRETER="extension/$PYTHON3_PATH"
+CFFI_INTERPRETER="cffi/$PYTHON3_PATH"
+INTERPRETERS=($EXTENSION_INTERPRETER $CFFI_INTERPRETER)
 
 # validates that the script is ready to run
 function check_list ()
@@ -34,13 +38,13 @@ function check_list ()
     exit 1;
   fi
 
-  if [ ! -f "$EXTENSION_INTERPRETER" ]; then
-    echo "$EXTENSION_INTERPRETER was not found."
-    echo "Did you build the extension module?"
-    echo "Please run build-apps.sh."
-    exit 1;
-  fi
-
+  for i in "${INTERPRETERS[@]}"; do
+    if [ ! -f "$i" ]; then
+      echo "$i was not found."
+      echo "Did you run build.apps.sh?"
+      exit 1;
+    fi
+  done
 }
 
 # creates the output CSV file and associated header record
@@ -58,10 +62,10 @@ function execute_app ()
 {
   if [ "$1" == "standalone-c" ]; then
     time ./"$a"/app "$2"
-  elif [ "$1" == "extension" ]; then
-    time "$EXTENSION_INTERPRETER" "$a"/main.py "$2"
-  else
+  elif [ "$1" == "pure-python" ] || [ "$1" == "ctypes" ]; then
     time python3 "$a"/main.py "$2"
+  else
+    time "$a"/venv/bin/python3 "$a"/main.py "$2"
   fi
 }
 
