@@ -33,15 +33,29 @@ cat python-c-integrations.csv
 
 ## Comparisons
 
+### ctypes
+ctypes supports ABI based integrations using libraries loaded at runtime. ctypes requires the least effort to implement as it does not require a compilation or build step.
+ctypes may be a good choice if there is a need to integrate with a small number of C functions or libraries when performance is not critical.
+
+### cffi
+cffi supports both ABI and API integrations. The latter requires a compilation and build step, which optimizes execution. There is also less cognitive
+overhead as the integration is a build-time effort with cffi's custom builder. Once the extension module is built and installed, it is imported and used like "plain old python".
+cffi is a good choice if you need to utilize existing C libraries within a Python application or service.
+
+### cython
+cython supports calling C from Python (including standard libraries) and calling Python from C. Developers create cython enabled modules within *.pyx
+files (that's the convention but not required) using either Python 3 compliant decorators and type hints, or an alternate "cython" syntax. The cython module
+is then built as a C extension module which can be called from Python.
+
+cython comes in handy when you need to optimize performance critical paths and don't want to write straight C.
+
+### testing observations
 The output from a `run-tests.sh` job is below. The tests were run on a 2019 Macbook Pro (Big Sur) with a 2.3GHz 8-Core Intel i9 
 processor and 16GB of RAM. Processing results will vary across runs, and of course the demo function is rather arbitrary code :) and
 no single approach is optimized. So please take the results below with a grain of salt.
 
 The two ends of the spectrum, from a performance standpoint are the `standalone-c` and `pure-python` applications. The integration example's execution
 time varies by iteration.
-
-From an implementation and cognitive overhead standpoint `cffi` stands out in that integration does not require additional
-cognitive overhead of either the Python C API or Cython's alternate syntax/decorators. 
 
 
 |iterations|app_name     |elapsed_time|
