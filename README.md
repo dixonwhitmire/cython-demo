@@ -16,6 +16,7 @@ Each example is stored within a separate directory. Examples include:
 - extension: C Python extension method.
 - cffi: C Foreign Function Interface.
 - ctypes: C Foreign Function Interface (Python Base Library)
+- cython: Generates a C Foreign Function Interface
 - pure-python: Executable demo function in Python
 
 
